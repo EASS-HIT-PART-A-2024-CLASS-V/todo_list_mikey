@@ -1,0 +1,15 @@
+FROM python:3.10.1
+
+WORKDIR /frontend
+
+COPY main.py /frontend/main.py
+
+COPY requirements.txt /frontend/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /frontend/requirements.txt
+
+EXPOSE 8501
+
+ENTRYPOINT ["streamlit","run"]
+
+CMD ["main.py", "--server.port=8501", "--server.address=0.0.0.0"]

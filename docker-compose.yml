@@ -1,0 +1,41 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    networks:
+      - todolist-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - todolist-network
+
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      - DATABASE_URL=mongodb://localhost:27017
+      - MONGO_DB=todo-db
+
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - todolist-network
+
+networks:
+  todolist-network:
+
+volumes:
+  mongo-data:

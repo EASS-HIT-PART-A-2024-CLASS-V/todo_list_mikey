@@ -1,0 +1,22 @@
+FROM python:3.10.1
+
+WORKDIR /backend
+
+COPY main.py /backend/main.py
+
+COPY db.py /backend/db.py
+
+COPY tests.py /backend/tests.py
+
+COPY todotype.py /backend/todotype.py
+
+COPY requirements.txt /backend/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /backend/requirements.txt
+
+EXPOSE 8000
+
+EXPOSE 27017
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--reload"]
+
